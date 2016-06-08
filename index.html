@@ -1,7 +1,49 @@
 <html>
-<head></head>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script>
+			$(document).ready(function(){
+				if(Cookies.get('username')){
+					$('#user-form').hide();
+					$('#welcome').show();
+					document.getElementById('welcome').innerHTML+=Cookies.get('username');
+				}
+				else{
+					$('#initial-message').animate({opacity:1.0},"slow");
+					setInterval(function(){
+						$('#initial-message').css("background-color",getRandomColor());
+					},1000);
+				}
+			});
+		</script>
+</head>
 <body>
-<h1 align="center">Testing Out Cookies :)</h1>
-<script src="cookies.js" type="text/javascript"></script>
+
+<h1 align="center">Testing Cookies</h1>
+<h2 id="initial-message" style="opacity:0.0;display:inline-block;color:white" align="center">Welcome, Enter your name</h2>
+		<form align="center" id="user-form" onsubmit="return createUserCookie()">
+		Username:
+			<input type="text" name="userName" id="userName"/>
+			<input type="submit" value="Submit">
+		</form>
+
+		<h1 id="welcome" style="color:yellow" align="center">Welcome to Cookie Testing Page, </h1>
+
+		<script src="cookies.js"></script>
+
+		<script>
+			function createUserCookie(){
+				Cookies.set('username',document.getElementById('userName').value);
+				return false;
+			}
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+		</script>
 </body>
 </html>
